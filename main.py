@@ -118,6 +118,11 @@ def mod_cfg (data: dict, workingDir: os.path):
     cfg ["settings"]["terminal.integrated.cwd"]         = workingDir
     cfg ["settings"]["python.defaultInterpreterPath"]   = os.path.join (workingDir, 'bin', "python3")
 
+    cfg = data ["settings.json"]
+
+    cfg ["App-Settings"]["name"] = os.path.split (workingDir)[1]
+    cfg ["App-Settings"]["version"] = "0.0.1"
+
     return data
 
 
