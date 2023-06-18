@@ -5,11 +5,10 @@ setup.setup (os.path.abspath (__file__))
 mainDir = os.path.dirname (os.path.abspath (__file__))
 
 
-def get_path (flag_only: bool = False):
+def get_env_path (flag_only: bool = False) -> (str|None):
     args = sys.argv [1::]
 
-    if args == []:
-        help ()
+    if args == []: help ()
 
     if flag_only:
         for arg in args:
@@ -25,51 +24,52 @@ def get_path (flag_only: bool = False):
                 return arg
 
 
-def get_dir_name (dir_path: os.path):
-    dir_name = os.path.split (dir_path)
-
-    return dir_name [-1]
-
-
-def make_venv (path_to_dir: os.path):
-    if os.path.exists (path_to_dir):
-        print (f"\033[1;31m[-] PathAlreadyExistsError: Can't create venv '{path_to_dir}': File already exists.\033[0m")
-        exit ()
-
-    else:
-        venv.create (path_to_dir, system_site_packages = False)
-
-
-def check_if_created (path_to_dir: os.path):
-    default_sub_dirs_in_venv = ['include', 'lib', 'lib64', 'bin', 'pyvenv.cfg']
-    found = {'include': False, 'lib': False, 'lib64': False, 'bin': False, 'pyvenv.cfg': False}
-
-    if os.path.exists (path_to_dir):
-        ld = os.listdir (path_to_dir)
-
-    for i in ld:
-        if i in default_sub_dirs_in_venv:
-            found [i] = True
-
-        else:
-            found [i] = False
-
-    else:
-        if found ['include'] and found ['lib'] and found ['lib64'] and found ['bin'] and found ['pyvenv.cfg']: return True
-        else: return False
-
-
-def check_flag (cmd: str, path: os.path):
+def check_flag (cmd: str) -> None:
     if cmd == '-t' or cmd == '-test':
         time.sleep (10)
-        os.system (f"rm -r '{path}'")
-        print (f"\033[1;31m[+] Removed '{get_path ()}' successfully.\033[0m")
+        os.system (f"rm -r '{env_path}'")
+        print (f"\033[1;31m[+] Removed '{get_env_path ()}' successfully.\033[0m")
 
     if cmd == '-h' or cmd == 'help':
         help ()
 
 
-def get_data  (mainDir: os.path) -> dict:
+def mk_code_env () -> None:
+    if os.path.exists (env_path):
+        print (f"\033[1;31m[-] PathAlreadyExistsError: Can't create venv '{env_path}': File already exists.\033[0m")
+        exit ()
+
+    else: venv.create (env_path, system_site_packages = False)
+
+
+def check_if_created () -> bool:
+    req = [
+        'include',
+        'lib',
+        'lib64',
+        'bin',
+        'pyvenv.cfg'
+    ]
+    found = {}
+
+    for r in req:
+        found [r] = False
+
+    if os.path.exists (env_path):
+        ld = os.listdir (env_path)
+
+        for i in ld:
+            if i in req:
+                found [i] = True
+
+            else:
+                found [i] = False
+
+    if found ['include'] and found ['lib'] and found ['lib64'] and found ['bin'] and found ['pyvenv.cfg']: return True
+    else: return False
+
+
+def get_default_code  (mainDir: os.path) -> dict:
     default_cfg_files_dir = os.path.join (mainDir, "defaults")
     list_dir = os.listdir (default_cfg_files_dir)
     data = {}
@@ -90,14 +90,29 @@ def get_data  (mainDir: os.path) -> dict:
     return data
 
 
-def make_default_cfg (data: dict, workingDir: os.path):
-    os.chdir (workingDir)
+def mod_cfg (data: dict):
+    # modifying the code-workspace file for the new venv
+    cfg = data [".vscode/code-workspace.json"]
+
+    cfg ["folders"]["path"]                             = env_path
+    cfg ["settings"]["terminal.integrated.cwd"]         = env_path
+    cfg ["settings"]["python.defaultInterpreterPath"]   = os.path.join (env_path, 'bin', "python3")
+
+    cfg = data ["settings.json"]
+
+    cfg ["App-Settings"]["project-name"] = os.path.split (env_path)[1]
+
+    return data
+
+
+def config_code_env (data: dict):
+    os.chdir (env_path)
 
     for file_path in data.keys ():
         file = file_path
         try:
             os.makedirs (os.path.dirname (file_path))
-            file = os.path.join (os.path.dirname (file_path), f"{os.path.split (workingDir)[1]}.code-workspace")
+            file = os.path.join (os.path.dirname (file_path), f"{os.path.split (env_path)[1]}.code-workspace")
 
         except FileNotFoundError:
             pass
@@ -108,22 +123,6 @@ def make_default_cfg (data: dict, workingDir: os.path):
 
             else:
                 f.writelines (data [file_path])
-
-
-# modifying the code-workspace file for the new venv
-def mod_cfg (data: dict, workingDir: os.path):
-    cfg = data [".vscode/code-workspace.json"]
-
-    cfg ["folders"]["path"]                             = workingDir
-    cfg ["settings"]["terminal.integrated.cwd"]         = workingDir
-    cfg ["settings"]["python.defaultInterpreterPath"]   = os.path.join (workingDir, 'bin', "python3")
-
-    cfg = data ["settings.json"]
-
-    cfg ["App-Settings"]["name"] = os.path.split (workingDir)[1]
-    cfg ["App-Settings"]["version"] = "0.0.1"
-
-    return data
 
 
 def help ():
@@ -140,19 +139,20 @@ Made by Srijan Bhattacharyya.'''
 
 
 def main ():
-    path = get_path ()
-    data = mod_cfg (get_data (mainDir), path)
+    global env_path, data
 
-    make_venv (path)
+    env_path = get_env_path ()
+    data = mod_cfg (get_default_code (mainDir))
 
-    if check_if_created (path):
-        check_if_created (path)
-        make_default_cfg (data, path)
+    mk_code_env ()
+
+    if check_if_created (): config_code_env (data)
+    else: print (f'\033[1;31m[-] Venv not created.\033[0m'); exit ()
 
     print (f'\033[1;32m[+] Venv created successfully.\033[0m')
-    print (f"\033[1mPath to venv: {path}\033[0m")
+    print (f"\033[1mPath to venv: {env_path}\033[0m")
 
-    check_flag (get_path (True), path)
+    check_flag (get_env_path (True))
 
 
 if __name__ == "__main__":
