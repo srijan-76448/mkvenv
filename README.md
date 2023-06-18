@@ -23,8 +23,10 @@
 3. mkvenv will create the project directory, generate the necessary files, and set up the basic Python coding virtual environment.
 
 ## Directory Structure
-- `compiler.sh`: Shell script to compile and run the `program.c` file
-- `program.c`: Sample C program to print "Hello, World!"
+- Default venv fils and dirs
+- `main.py`: It is a default main.py file with some default (basic) code. 
+- `dependencies.json`: contains all the dependencies.
+- `setup.py`: It is the default automated program to install dependencies from a dependencies.json file.
 - `settings.json`: Project settings file
 
 ## Configuration
