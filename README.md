@@ -32,7 +32,7 @@
 ## Configuration
 The `settings.json` file in the virtual environment directory contains the configuration settings for the project. If you want, you can modify the following properties in the settings.json file:
 
-- `"project-name"`: The name of the project [Default ""]
+- `"project-name"`: The name of the project [Default none]
 - `"version"`: The version number of the project [Default "0.0.1"]
 - `"creator-name"`: Your name or the creator's name [Default my name, "Srijan Bhattacharyya"]
 
