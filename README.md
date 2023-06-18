@@ -1,41 +1,45 @@
-Project mkvenv
-==============
-It is a modified version of `venv` module of python.
+# mkvenv - Python Coding Virtual Environment Creator Bot
 
-Aditional Features:
------------------
- • While creating venv, it will also create some aditional files like `main.py`, `dependencies.json`, `setup.py` which comes handy for high level coding.<br>
- • It also creats a directory named `.vscode` with a file with the same name as the name of your project with an extention `.code-workspace`.
+`mkvenv` is a Python-based tool to create a basic Python coding virtual environment with the specified name and path. It automates the setup process by creating the necessary files and directories for the virtual environment, including a main.py file, setpy.py file, dependencies.json file, and settings.json file.
 
-Brief Explanation on each extra file:
--------------------------------------
- • `dependencies.json`<br>
-This is a json file where you need to put all the dependencies of your project in a specific order. For example:<br>
-{
-    "cv2": "opencv-python"
-}<br>
-In the above example, for importing you need to write `cv2` but wile installing you need to write `opencv-python`.<br>
+## Getting Started
+### Prerequisites
 
- • `setup.py`<br>
-This file will take the dependencies from the json file named `dependencies.json` and go through a try and except loop for each and every dependencies mentioned in it. It will try to import the module first, if it can't then it will install it using pip.<br>
-For examle, in case of importing opencv, it will try to import opencv using the command `import cv2`, if it fails, it will raise an `ImportError`, hence it will install opencv using the command `pip install opencv-python`.<br>
+- Python 3.x
 
- • `main.py`<br>
-This is the main file where it will write some default codes, like importing the `setup.py` file and instructing it to install the dependencies.
+### Installation
 
- • `.vscode`<br>
-It is only for vscode uers it will make a workspace config file with the same name as the name of your project with an extention `.code-workspace`.
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/SrijanBhattacharyya/mkvenv.git
+2. First run:
+    ```bash
+    python3 mkvenv/main.py
+## Usage
+1. Run the mkvenv script:
+    ```bash
+    mkvenv
+2. Follow the on-screen instructions to provide the project name/path, and other details.
+3. mkvenv will create the project directory, generate the necessary files, and set up the basic Python coding virtual environment.
 
-How to install and set everything up ?
---------------------------------------
- • At first install the program using `git clone` or downloading it as zip and unzipping it.<br>
- • Then run the `main.py` file for once. On the first run, it will add a line in your .bashrc file which will allow to run this whole script with a single command [default command: `mkvenv`]. It will also show the help section by default.
+## Directory Structure
+- `compiler.sh`: Shell script to compile and run the `program.c` file
+- `program.c`: Sample C program to print "Hello, World!"
+- `settings.json`: Project settings file
 
-NOTE:
------
- • PLEASE DON'T EDIT THE SOURCE CODE IF DON'T KNOW ANYTHING ABOUT IT.<BR>
- • THIS PROGRAM IS NOT DESIGNED FOR WINDOWS, SO PLEASE USE IT ON LINUX ONLY.
+## Configuration
+The `settings.json` file in the virtual environment directory contains the configuration settings for the project. If you want, you can modify the following properties in the settings.json file:
 
-Credits
--------
-This program is created by Srijan Bhattacharyya. This program was created to automate some basic things and educational purpose only.
+- `"project-name"`: The name of the project [Default ""]
+- `"version"`: The version number of the project [Default "0.0.1"]
+- `"creator-name"`: Your name or the creator's name [Default my name, "Srijan Bhattacharyya"]
+
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+
+## Contributing
+Contributions to the `cbot` project are welcome! If you have any suggestions, improvements, or bug fixes, please open an issue or submit a pull request.
+
+## NOTE:
+- Please make sure to change the `"creator-name"` tag which is present at `mkvenv/defaults/settings.json` to your name. By default it has my name "Srijan Bhattacharyya".
