@@ -1,4 +1,4 @@
-import os, json, pip
+import os, json
 
 
 def get_dependencies (dependencies_file_path: os.path) -> dict:
@@ -12,8 +12,9 @@ def main (mainDir: os.path):
     pkgs = get_dependencies (requirements_file_path)
 
     for pkg in pkgs.keys ():
-        try:
-            exec (f"import {pkg}")
+        if pkg != "keyword-for-importing":
+            try:
+                exec (f"import {pkg}")
 
-        except ImportError:
-            pip.main (['install', pkgs [pkg]])
+            except ImportError:
+                os.system (f"yay -S python-{pkgs [pkg]}")
