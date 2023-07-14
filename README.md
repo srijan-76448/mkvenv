@@ -1,5 +1,7 @@
 # mkvenv - Python Coding Virtual Environment Creator Bot
 
+![visitors](https://visitor-badge.laobi.icu/badge?page_id=SrijanBhattacharyya/mkvenv]
+
 `mkvenv` is a Python-based tool to create a basic Python coding virtual environment with the specified name and path. It automates the setup process by creating the necessary files and directories for the virtual environment, including a main.py file, setpy.py file, dependencies.json file, and settings.json file.
 
 ## Getting Started
