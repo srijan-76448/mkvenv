@@ -43,7 +43,7 @@ The `settings.json` file in the virtual environment directory contains the confi
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ## Contributing
-Contributions to the `cbot` project are welcome! If you have any suggestions, improvements, or bug fixes, please open an issue or submit a pull request.
+Contributions to the `mkvenv` project are welcome! If you have any suggestions, improvements, or bug fixes, please open an issue or submit a pull request.
 
 ## NOTE:
 - Please make sure to change the `"creator-name"` tag which is present at `mkvenv/defaults/settings.json` to your name. By default it has my name "Srijan Bhattacharyya".
