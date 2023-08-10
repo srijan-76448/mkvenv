@@ -9,7 +9,7 @@ app_info_file = os.path.join (mainDir, "settings.json")
 
 def get_app_info () -> dict:
     with open (app_info_file) as f:
-        return dict (json.load (f))
+        return dict (json.load (f))["App-Settings"]
 
 
 def get_env_path (flag_only: bool = False) -> (str|None):
