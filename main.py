@@ -1,6 +1,6 @@
 import os, sys, venv, time, json, setup
 
-setup.setup (os.path.abspath (__file__))
+setup.setup ()
 
 mainDir = os.path.dirname (os.path.abspath (__file__))
 
