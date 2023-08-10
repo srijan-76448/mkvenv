@@ -144,7 +144,7 @@ def help () -> None:
 
 
 def version () -> None:
-    print (f"mkvenv {app_info ['']}")
+    print (f"{app_info ['name']} {app_info ['version']}")
     exit ()
 
 
