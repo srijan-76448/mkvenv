@@ -3,6 +3,13 @@ import os, sys, venv, time, json, setup
 setup.setup ()
 
 mainDir = os.path.dirname (os.path.abspath (__file__))
+man_file = os.path.join (mainDir, "man.txt")
+app_info_file = os.path.join (mainDir, "settings.json")
+
+
+def get_app_info () -> dict:
+    with open (app_info_file) as f:
+        return dict (json.load (f))
 
 
 def get_env_path (flag_only: bool = False) -> (str|None):
@@ -126,23 +133,19 @@ def config_code_env (data: dict):
 
 
 def help ():
-    h = '''syntax: mkvenv -flag path-to-venv
-
-FLAGS:
-  -h, -help        help
-  -t, -test        test
-
-Made by Srijan Bhattacharyya.'''
+    with open (man_file) as f:
+        man = f.read ().replace ("", )
 
     print (h)
     exit ()
 
 
 def main ():
-    global env_path, data
+    global env_path, data, app_info
 
     env_path = get_env_path ()
     data = mod_cfg (get_default_code (mainDir))
+    app_info = get_app_info ()
 
     mk_code_env ()
 
