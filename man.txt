@@ -1,0 +1,7 @@
+syntax: mkvenv -flag path-to-venv
+
+FLAGS:
+  -h, -help        help
+  -t, -test        test
+
+Made by <CREATOR-NAME>.
