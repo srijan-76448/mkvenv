@@ -37,8 +37,11 @@ def check_flag (cmd: str) -> None:
         os.system (f"rm -r '{env_path}'")
         print (f"\033[1;31m[+] Removed '{get_env_path ()}' successfully.\033[0m")
 
-    if cmd == '-h' or cmd == 'help':
+    if cmd == '-h' or cmd == '--help':
         help ()
+
+    if cmd == '-v' or cmd == '--version':
+        version ()
 
 
 def mk_code_env () -> None:
@@ -132,11 +135,16 @@ def config_code_env (data: dict):
                 f.writelines (data [file_path])
 
 
-def help ():
+def help () -> None:
     with open (man_file) as f:
         man = f.read ().replace ("<CREATOR-NAME>", app_settings ["creator-name"])
 
-    print (h)
+    print (man)
+    exit ()
+
+
+def version () -> None:
+    print (f"mkvenv {app_info ['']}")
     exit ()
 
 
