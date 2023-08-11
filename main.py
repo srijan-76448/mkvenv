@@ -137,7 +137,7 @@ def config_code_env (data: dict):
 
 def help () -> None:
     with open (man_file) as f:
-        man = f.read ().replace ("<CREATOR-NAME>", app_settings ["creator-name"])
+        man = f.read ().replace ("<CREATOR-NAME>", app_info ["creator-name"])
 
     print (man)
     exit ()
