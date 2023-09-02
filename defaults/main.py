@@ -11,7 +11,7 @@ def print_error (error: str):
 
 
 def print_success (succ: str):
-    print (f"\033[38;2;0;255;0;1m[-] {error}\033[0m")
+    print (f"\033[38;2;0;255;0;1m[-] {succ}\033[0m")
 
 
 def main ():
