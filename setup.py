@@ -1,8 +1,8 @@
 import os, sys
 
-def setup () -> None:
+def setup() -> None:
     # Define the alias in ~/.bashrc
-    mainDir = os.path.abspath (__file__)
-    cmd = f"/usr/bin/python3 {mainDir}"
+    mainDir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'main.py')
+    cmd = f"alias mkvenv='/usr/bin/python3 {mainDir}'"
 
-    os.system (f"grep -qxF '{cmd}' ~/.bashrc || echo '{cmd}' >> ~/.bashrc")
+    os.system(f"grep -qxF '{cmd}' ~/.bashrc || echo '{cmd}' >> ~/.bashrc")
